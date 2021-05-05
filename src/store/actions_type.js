@@ -1,0 +1,1 @@
+export const GET_CURRENT_LOC_DATA = 'GET_CURRENT_LOC_DATA';
