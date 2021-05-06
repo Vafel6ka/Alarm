@@ -15,7 +15,14 @@ const CurrentLocation = (props) => {
     const geoFindMe = () => {
         function success(pos) {
           let crd = pos.coords;
-          props.getCurLocDataFn(crd);
+          let lon = crd.longitude;
+          let lat = crd.latitude;
+          props.getCurLocDataFn({
+            latitude: lat,
+            longitude: lon,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.005
+            });
         }
     
         function error(err) {
@@ -35,37 +42,18 @@ const CurrentLocation = (props) => {
 
     return (
         <View style = {styled.conteiner}>
-            <View style = {styled.resultBox}>
-                <Text>
-                    latitude: {JSON. stringify(props.coords.latitude)}
-                </Text>
-                <Text>
-                   longitude: {JSON. stringify(props.coords.longitude)}
-                </Text>
-            </View>
-            <View style = {styled.btnContainer}>
                 <TouchableOpacity style = {styled.getBtn} onPress = {() => {console.log(props.all, ":all")}}>
                     <Text style = {styled.firstBtnText}>
-                        Get 
+                        Get current possition
                     </Text>
-                    
-                    <Text style = {styled.secondBtnText}>
-                        current
-                    </Text>
-                    <Text style = {styled.thirdBtnText}>
-                        coords
-                    </Text>
-
                 </TouchableOpacity>
-            </View>
-
         </View>
     )
 }
 
 const mapStateToProps = (state) => ({
     all: state,
-    coords: state.currentlocation.data
+    coords: state.location.curPointData
   });
 
   const mapDispatchToProps = (dispatch) => ({
@@ -81,11 +69,8 @@ const styled = StyleSheet.create({
         justifyContent: "center"
     },
     getBtn: {
-        flex: 0.5,
         width: 200,
-        height: 200,
-        borderRadius: 100,
-        borderWidth: 0,
+        height: 60,
         backgroundColor: Color.mainBtnGetCurLoc,
         alignItems: "center",
         justifyContent: "center",
@@ -101,12 +86,6 @@ const styled = StyleSheet.create({
         justifyContent: "center",
     },
     firstBtnText: {
-        fontSize: 25
+        fontSize: 18
     },
-    secondBtnText: {
-        fontSize: 34
-    },
-    thirdBtnText: {
-        fontSize: 25
-    }
 })

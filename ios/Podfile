@@ -5,12 +5,15 @@ platform :ios, '10.0'
 
 target 'Alarm' do
   config = use_native_modules!
-
+  # Pods for ReactNativeMaps
+  pod 'GoogleMaps';
+  
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => false
   )
+
 
 
   target 'AlarmTests' do

@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import getCurLocReducer from "./getCurLocReducer"
+import getLocReducer from "./getLocReducer";
+import getAsyncDataReducer from "./getAsyncDataReducer"
 
 const rootReducer = combineReducers({
-    currentlocation: getCurLocReducer
+    location: getLocReducer,
+    data: getAsyncDataReducer
 })
 
 export default rootReducer
