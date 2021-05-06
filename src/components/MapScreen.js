@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, C } from "react-native-maps";
 import { connect } from "react-redux";
 import geolocation from "@react-native-community/geolocation";
 import { getCurLocData } from "../store/actions/getCurLocData"
@@ -37,6 +37,18 @@ const MapScreen = (props) => {
         geoFindMe()
       }, [])
 
+      const getNewMarker = (e) =>{
+          console.log(e.nativeEvent.coordinate)
+        return (   
+            <Marker                   
+            key = {new Date()}
+            coordinate = {{latitude : 37.78576288265525 , longitude: -122.40732739703857}}
+            title = 'My current location'
+            description = 'dddd'
+        />
+        )
+      }
+
     return (
         <View style = {styled.container}>
             <View style = {styled.btn}>
@@ -56,14 +68,26 @@ const MapScreen = (props) => {
 
             <MapView style={styled.mapScreen}
                 region={props.all.location.initialRegion}
-                onRegionChange = {geoFindMe}>
+                //onRegionChange = {geoFindMe}
+                // onPress = {(e)=>console.log(e.nativeEvent.coordinate)}>
+                onPress = {getNewMarker}
+                > 
+                
                       
                 <Marker
-                    coordinate = {{ latitude : props.latitude , longitude : props.longitude }}
+                key = {new Date()}
+                    coordinate = {{ latitude : props.latitude , longitude: props.longitude }}
                     title = 'My current location'
                     description = 'dddd'
                 />
 
+                {/* <Marker
+                key = {new Date()}
+                    coordinate = {{ latitude : 37.78576288265525 , longitude: -122.40732739703857 }}
+                    title = 'My current location'
+                    description = 'dddd'
+                /> */}
+                
             </MapView>
             
         </View>
@@ -97,6 +121,7 @@ const styled = StyleSheet.create ({
     mapScreen: {
         flex: 0.8, 
         width: deviceWidth,
+        zIndex: 2
     },
     btn: {
         flex: 0.2,

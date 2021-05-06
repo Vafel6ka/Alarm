@@ -4,7 +4,7 @@ const initialState = {
     initialRegion: {
         latitude: 37,
         longitude: -122,
-        latitudeDelta: 0.01,
+        latitudeDelta: 0.04,
         longitudeDelta: 0.005
         }
 }
