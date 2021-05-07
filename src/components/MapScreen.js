@@ -112,8 +112,6 @@ const styled = StyleSheet.create ({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        borderColor: "red",
-        borderWidth: 2
     },
     mapScreen: {
         flex: 0.8, 

@@ -1,14 +1,22 @@
 import { combineReducers } from "redux";
 import getLocReducer from "./getLocReducer";
 import getMeetPointReducer from "./getMeetPointReducer"
-import LogInReducer from "./logInReducer"
+import LogInReducer from "./logInReducer";
+import { USER_LOG_OUT } from "../actions_type"
 
-
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     location: getLocReducer,
     meetPoint: getMeetPointReducer,
     currentUserInfo: LogInReducer,
     
 })
 
-export default rootReducer
+const rootReducer = (state, action) => {
+if (action.type === USER_LOG_OUT) {
+  state = undefined
+}
+
+return appReducer(state, action)
+}
+
+export default rootReducer;

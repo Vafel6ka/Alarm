@@ -15,8 +15,7 @@ const LogIn = (props) => {
     let user = Parse.User.logIn(props.username.toString(), props.password.toString())
       .then(user => {
         console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"))
-        console.log(props.username.toString(), 'username');
-        console.log(props.password.toString(), 'password');
+        props.navigation.navigate('Main')
     })
       .catch (error => {
         console.log(error, "Error!!!");
@@ -35,7 +34,7 @@ const LogIn = (props) => {
                       placeholder = "password"
                       onChangeText = {data => props.getPassFn(data)}/>
 
-      <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => props.navigation.navigate('Reset password')}>
+      <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => {}}>
         <Text style = {styled.chgPassText}>"Don't remember the password"</Text>
       </TouchableOpacity>
 

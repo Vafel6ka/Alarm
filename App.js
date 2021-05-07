@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import {
   ScrollView,
@@ -5,13 +6,21 @@ import {
   Text,
   View,
 } from 'react-native';
-import MapScreen from './src/components/MapScreen';
+
 import { initializeParse } from "@parse/react-native";
 import { AsyncStorage } from "@react-native-async-storage/async-storage"
+
+import { NavigationContainer } from "@react-navigation/native"
+import { createStackNavigator } from "@react-navigation/stack"
+
 import LogInForm from './src/components/LogInForm';
 import SignUpForm from './src/components/SignUpForm';
+import MapScreen from './src/components/MapScreen';
+import StartScreen from './src/components/StartScreen'
 
-const Parse = require('parse/react-native.js');
+//const Parse = require('parse/react-native.js');
+
+const Stack = createStackNavigator();
 
 initializeParse(
   'https://parseapi.back4app.com/',
@@ -19,27 +28,39 @@ initializeParse(
   'rQFGHeqgBGxhCLGiNAp1WwAYlH8hYL0rfQpCsEy9'
 );
 
-async function creatPost() {
-  const MeetPoint = Parse.Object.extend("MeetPoint");
-        const meetPoint = new MeetPoint();
-        meetPoint.set("title", 'aaa');
-        meetPoint.set("discription", 'bbb');
-        meetPoint.set('latitude', '12');
-        meetPoint.set('longitude', '33');
-        await meetPoint.save();
-      console.log('creacte meetPoint post')
-  }
-  //creatPost()
 const App = () => {
-
   return (
-    <View style = {styled.container}>
-      {/* <MapScreen/> */}
-      <LogInForm/>
-      {/* <SignUpForm/> */}
-    </View>
-  );
-};
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name = 'Home'
+          component = {StartScreen}
+        />
+
+        <Stack.Screen
+          name = 'Log In'
+          component = {LogInForm}
+        />
+        
+        <Stack.Screen
+          name = 'Main'
+          component = {MapScreen}
+        />
+
+        <Stack.Screen
+          name = 'Sign Up'
+          component = {SignUpForm}
+        />
+
+        {/* <Stack.Screen
+          name = 'Reset password'
+          component = {ResetPassword}
+        /> */}
+
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
 
 const styled = StyleSheet.create({
   container: {
