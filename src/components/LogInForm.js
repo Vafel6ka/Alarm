@@ -14,13 +14,13 @@ const LogIn = (props) => {
   const logIn = () => {
     let user = Parse.User.logIn(props.username.toString(), props.password.toString())
       .then(user => {
-        console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"));
-        props.navigation.navigate('Main');
-        console.log(props.all);
-        
+        console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"))
+        console.log(props.username.toString(), 'username');
+        console.log(props.password.toString(), 'password');
     })
       .catch (error => {
         console.log(error, "Error!!!");
+        console.log(props.all)
         Alert.alert('Error', 'Something wrong! Try again...')
       })
   }
@@ -45,10 +45,10 @@ const LogIn = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  all:state,
-  username: state.currentUserInfo.username,
-  password: state.currentUserInfo.password,
-  email: state.currentUserInfo.email
+    all:state,
+    username: state.currentUserInfo.username,
+    password: state.currentUserInfo.password,
+    email: state.currentUserInfo.email
 })
 
 const mapDispatchToProps = (dispatch) => {

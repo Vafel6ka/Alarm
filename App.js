@@ -9,6 +9,7 @@ import MapScreen from './src/components/MapScreen';
 import { initializeParse } from "@parse/react-native";
 import { AsyncStorage } from "@react-native-async-storage/async-storage"
 import LogInForm from './src/components/LogInForm';
+import SignUpForm from './src/components/SignUpForm';
 
 const Parse = require('parse/react-native.js');
 
@@ -35,6 +36,7 @@ const App = () => {
     <View style = {styled.container}>
       {/* <MapScreen/> */}
       <LogInForm/>
+      {/* <SignUpForm/> */}
     </View>
   );
 };
