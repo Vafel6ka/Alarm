@@ -1,3 +1,4 @@
-export const Color = {
-    mainBtnGetCurLoc: "red"
+export default {
+    mainBtnGetCurLoc: "red",
+    mainBGcolor: '#6c8c94'
 }

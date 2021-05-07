@@ -8,6 +8,7 @@ import {
 import MapScreen from './src/components/MapScreen';
 import { initializeParse } from "@parse/react-native";
 import { AsyncStorage } from "@react-native-async-storage/async-storage"
+import LogInForm from './src/components/LogInForm';
 
 const Parse = require('parse/react-native.js');
 
@@ -27,12 +28,13 @@ async function creatPost() {
         await meetPoint.save();
       console.log('creacte meetPoint post')
   }
-  creatPost()
+  //creatPost()
 const App = () => {
 
   return (
     <View style = {styled.container}>
-      <MapScreen/>
+      {/* <MapScreen/> */}
+      <LogInForm/>
     </View>
   );
 };
