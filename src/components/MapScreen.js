@@ -38,7 +38,7 @@ const MapScreen = (props) => {
         geoFindMe()
       }, [])
 
-      const getNewMarker = (e) =>{
+      const getNewMarkerData = (e) =>{
         console.log(e.nativeEvent.coordinate)
         props.getMeetPointDataFn(e.nativeEvent.coordinate)
         console.log(props.all)  
@@ -65,23 +65,23 @@ const MapScreen = (props) => {
                 region={props.all.location.initialRegion}
                 //onRegionChange = {geoFindMe}
                 // onPress = {(e)=>console.log(e.nativeEvent.coordinate)}>
-                onPress = {getNewMarker}
+                onPress = {getNewMarkerData}
                 > 
                 
                       
                 <Marker
-                key = {new Date()}
+                key = {1}
                     coordinate = {{ latitude : props.latitude , longitude: props.longitude }}
                     title = 'My current location'
                     description = 'dddd'
                 />
 
-                {/* <Marker
-                key = {new Date()}
-                    coordinate = {{ latitude : 37.78576288265525 , longitude: -122.40732739703857 }}
-                    title = 'My current location'
-                    description = 'dddd'
-                /> */}
+                <Marker
+                key = {2}
+                    coordinate = {props.meetPointCoord}
+                    title = 'My meet point'
+                    description = 'Meet Point'
+                /> 
                 
             </MapView>
             
@@ -92,7 +92,8 @@ const MapScreen = (props) => {
 const mapStateToProps = (state) => ({
     all: state,
     longitude: state.location.initialRegion.longitude,
-    latitude: state.location.initialRegion.latitude
+    latitude: state.location.initialRegion.latitude,
+    meetPointCoord: state.meetPoint.meetPointData
   });
 
 const mapDispatchToProps = (dispatch) => ({
