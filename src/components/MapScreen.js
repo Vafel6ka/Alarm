@@ -4,7 +4,11 @@ import MapView, { Marker, C } from "react-native-maps";
 import { connect } from "react-redux";
 import geolocation from "@react-native-community/geolocation";
 import { getCurLocData } from "../store/actions/getCurLocData";
-import { getMeetPointData } from "../store/actions/getMeetPointData"
+import { getMeetPointData } from "../store/actions/getMeetPointData";
+import LogBtn from "../styleComponents/LogBtn";
+import logOutUser from "../store/actions/logOutUser"
+
+const Parse = require('parse/react-native.js');
 
 const MapScreen = (props) => {
 
@@ -39,14 +43,44 @@ const MapScreen = (props) => {
       }, [])
 
       const getNewMarkerData = (e) =>{
-        console.log(e.nativeEvent.coordinate)
-        props.getMeetPointDataFn(e.nativeEvent.coordinate)
-        console.log(props.all)  
+        let coords = e.nativeEvent.coordinate
+        console.log(coords)
+        if (coords.latitude == props.latitude && coords.longitude == props.longitude) return 
+            else {
+                props.getMeetPointDataFn(coords)
+                console.log(props.all) 
+            }
       }
+
+      const getUserLogOut = () => {
+        Parse.User.logOut().then(() => {
+          const currentUser = Parse.User.current();  // this will now be null
+          console.log(currentUser)
+        });
+        props.logOutUserFn();
+        console.log(props.all)
+        props.navigation.navigate('Home')
+      }
+
+      async function setMarkData() {
+        const user = Parse.User.current();
+        const Mark = Parse.Object.extend("Mark");
+            const mark = new Mark();
+            mark.set("key", 'dddd');
+            mark.set("coordinate", '{33,33}');
+            mark.set('title', 'dsdsd');
+            mark.set('description', 'dsddsdsdsd');
+            mark.set("user", user);
+            await mark.save();
+            console.log(props.all)           
+        }
 
     return (
         <View style = {styled.container}>
             <View style = {styled.btn}>
+                <LogBtn onPress = {getUserLogOut}>
+                    Log out
+                </LogBtn>   
                 <TouchableOpacity onPress = {geoFindMe} >
                     <Text>
                         Push
@@ -70,14 +104,14 @@ const MapScreen = (props) => {
                 
                       
                 <Marker
-                key = {1}
+                    key = {1}
                     coordinate = {{ latitude : props.latitude , longitude: props.longitude }}
                     title = 'My current location'
                     description = 'dddd'
                 />
 
                 <Marker
-                key = {2}
+                    key = {2}
                     coordinate = {props.meetPointCoord}
                     title = 'My meet point'
                     description = 'Meet Point'
@@ -98,7 +132,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getCurLocDataFn: (data) => dispatch(getCurLocData(data)),
-    getMeetPointDataFn: (data) => dispatch(getMeetPointData(data))
+    getMeetPointDataFn: (data) => dispatch(getMeetPointData(data)),
+    logOutUserFn: () => dispatch(logOutUser())
     })
 
 export default connect(mapStateToProps, mapDispatchToProps) (MapScreen)

@@ -25,6 +25,7 @@ const SignUpForm = (props) => {
   user.signUp().then(function(user) {
       console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
       Alert.alert('Message', 'You was registrated successfully!')
+      props.navigation.navigate('Home')
   }).catch(function(error){
       console.log("Error: " + error.code + " " + error.message);
       Alert.alert('Error', 'Something wrong! Try again...')
