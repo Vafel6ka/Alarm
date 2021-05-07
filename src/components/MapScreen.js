@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-nati
 import MapView, { Marker, C } from "react-native-maps";
 import { connect } from "react-redux";
 import geolocation from "@react-native-community/geolocation";
-import { getCurLocData } from "../store/actions/getCurLocData"
+import { getCurLocData } from "../store/actions/getCurLocData";
+import { getMeetPointData } from "../store/actions/getMeetPointData"
 
 const MapScreen = (props) => {
 
@@ -38,15 +39,9 @@ const MapScreen = (props) => {
       }, [])
 
       const getNewMarker = (e) =>{
-          console.log(e.nativeEvent.coordinate)
-        return (   
-            <Marker                   
-            key = {new Date()}
-            coordinate = {{latitude : 37.78576288265525 , longitude: -122.40732739703857}}
-            title = 'My current location'
-            description = 'dddd'
-        />
-        )
+        console.log(e.nativeEvent.coordinate)
+        props.getMeetPointDataFn(e.nativeEvent.coordinate)
+        console.log(props.all)  
       }
 
     return (
@@ -101,7 +96,8 @@ const mapStateToProps = (state) => ({
   });
 
 const mapDispatchToProps = (dispatch) => ({
-    getCurLocDataFn: (data) => dispatch(getCurLocData(data))
+    getCurLocDataFn: (data) => dispatch(getCurLocData(data)),
+    getMeetPointDataFn: (data) => dispatch(getMeetPointData(data))
     })
 
 export default connect(mapStateToProps, mapDispatchToProps) (MapScreen)

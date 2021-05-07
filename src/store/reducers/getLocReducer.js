@@ -1,4 +1,4 @@
-import { GET_CURRENT_LOC_DATA, GET_END_POINT_LOC_DATA } from "../actions_type";
+import { GET_CURRENT_LOC_DATA } from "../actions_type";
 
 const initialState = {
     initialRegion: {

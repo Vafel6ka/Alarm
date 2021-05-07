@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import getLocReducer from "./getLocReducer";
-import getAsyncDataReducer from "./getAsyncDataReducer"
+import getMeetPointReducer from "./getMeetPointReducer"
+
 
 const rootReducer = combineReducers({
     location: getLocReducer,
-    data: getAsyncDataReducer
+    meetPoint: getMeetPointReducer
+    
 })
 
 export default rootReducer
