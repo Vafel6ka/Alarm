@@ -10,7 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@parse/react-native": "*",
+    "@react-native-async-storage/async-storage": "1.15.4",
     "@react-native-community/geolocation": "2.0.2",
+    "parse": "3.2.0",
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-maps": "0.28.0",
@@ -24,7 +27,7 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
     "eslint": "7.14.0",
-    "jest": "^26.6.3",
+    "jest": "26.5.0",
     "metro-react-native-babel-preset": "^0.64.0",
     "react-native-cli": "2.0.1",
     "react-test-renderer": "17.0.1"

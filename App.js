@@ -5,21 +5,33 @@ import {
   Text,
   View,
 } from 'react-native';
-import CurrentLocation from './src/components/CurrentLocation';
 import MapScreen from './src/components/MapScreen';
-import TestRedComp from './src/components/TestRedComp';
+import { initializeParse } from "@parse/react-native";
+import { AsyncStorage } from "@react-native-async-storage/async-storage"
 
+const Parse = require('parse/react-native.js');
 
+initializeParse(
+  'https://parseapi.back4app.com/',
+  'uvtoYghX2m8ogGrAPsIe76Pedlj5foeRo0R6J7io',
+  'rQFGHeqgBGxhCLGiNAp1WwAYlH8hYL0rfQpCsEy9'
+);
+
+async function creatPost() {
+  const MeetPoint = Parse.Object.extend("MeetPoint");
+        const meetPoint = new MeetPoint();
+        meetPoint.set("title", 'aaa');
+        meetPoint.set("discription", 'bbb');
+        meetPoint.set('latitude', '12');
+        meetPoint.set('longitude', '33');
+        await meetPoint.save();
+      console.log('creacte meetPoint post')
+  }
+  creatPost()
 const App = () => {
 
   return (
     <View style = {styled.container}>
-      {/* <TestRedComp/>
-      <Text>
-        We're did it!!!
-      </Text>
-      <CurrentLocation/>
-       */}
       <MapScreen/>
     </View>
   );
