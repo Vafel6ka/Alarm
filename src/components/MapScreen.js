@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import geolocation from "@react-native-community/geolocation";
 import { getCurLocData } from "../store/actions/getCurLocData";
 import { getMeetPointData } from "../store/actions/getMeetPointData";
+import { getMeetPointMarkerData } from "../store/actions/getMeetPointMarkerData";
 import LogBtn from "../styleComponents/LogBtn";
 import logOutUser from "../store/actions/logOutUser"
 
@@ -42,15 +43,47 @@ const MapScreen = (props) => {
         geoFindMe()
       }, [])
 
-      const getNewMarkerData = (e) =>{
+      const getNewMarkerData = (e) => {
+        const toState = (obj) => {
+            return new Promise (function (res) {
+                res(props.getMeetPointMarkerDataFn(obj))
+            })
+        }
+
         let coords = e.nativeEvent.coordinate
         console.log(coords)
         if (coords.latitude == props.latitude && coords.longitude == props.longitude) return 
             else {
-                props.getMeetPointDataFn(coords)
-                console.log(props.all) 
+
+                const meetPointMarkerData = {
+                    key: 2,
+                    coordinates: {
+                        latitude: coords.latitude,
+                        longitude: coords.longitude
+                    },
+                    title: 'My meet point',
+                    description: 'Meet Point'
+                }
+
+                props.getMeetPointDataFn(coords);
+                toState(meetPointMarkerData).then ((data)=>{setMarkData(data)}) 
+                console.log(props.all, "WARN!!!!");
+                
             }
       }
+
+      async function setMarkData(data) {
+        const user = Parse.User.current();
+        const Mark = Parse.Object.extend("Mark");
+            const mark = new Mark();
+            mark.set("key", data.payload.key.toString());
+            mark.set("longitude", data.payload.coordinates.longitude.toString());
+            mark.set("latitude", data.payload.coordinates.latitude.toString());
+            mark.set('title', data.payload.title);
+            mark.set('description', data.payload.description);
+            mark.set("user", user);
+            await mark.save();       
+        }
 
       const getUserLogOut = () => {
         Parse.User.logOut().then(() => {
@@ -61,19 +94,6 @@ const MapScreen = (props) => {
         console.log(props.all)
         props.navigation.navigate('Home')
       }
-
-      async function setMarkData() {
-        const user = Parse.User.current();
-        const Mark = Parse.Object.extend("Mark");
-            const mark = new Mark();
-            mark.set("key", 'dddd');
-            mark.set("coordinate", '{33,33}');
-            mark.set('title', 'dsdsd');
-            mark.set('description', 'dsddsdsdsd');
-            mark.set("user", user);
-            await mark.save();
-            console.log(props.all)           
-        }
 
     return (
         <View style = {styled.container}>
@@ -133,6 +153,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getCurLocDataFn: (data) => dispatch(getCurLocData(data)),
     getMeetPointDataFn: (data) => dispatch(getMeetPointData(data)),
+    getMeetPointMarkerDataFn: (data) => dispatch(getMeetPointMarkerData(data)),
     logOutUserFn: () => dispatch(logOutUser())
     })
 

@@ -2,10 +2,13 @@ import { GET_MEET_POINT_MARKER_DATA } from "../actions_type";
 
 const initialState = {
     meetPointMarkerData: {
-            key: '',
-            coordinate: '',
-            title: '',
-            description: ''
+            key: 2,
+            coordinates: {
+                latitude: '',
+                longitude: ''
+            },
+            title: 'My meet point',
+            description: 'Meet Point'
         }
 }
 
