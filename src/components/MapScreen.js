@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
-import MapView, { Marker, C } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { connect } from "react-redux";
 import geolocation from "@react-native-community/geolocation";
 import { getCurLocData } from "../store/actions/getCurLocData";

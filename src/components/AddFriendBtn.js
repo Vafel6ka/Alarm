@@ -9,44 +9,65 @@ import getFriendName from "../store/actions/getFriendName"
 
 const AddFriendBtn = (props) => {
 
-    async function isUserExist () {
+    async function isUserExistF () {
         const User = Parse.Object.extend("User");
         const query = new Parse.Query(User);
         query.equalTo("username", props.friend.name);
         const results = await query.find();
-        console.log(results, ':results');
+        //console.log(results, ':results');
         if (results.length === 0) { 
             Alert.alert ('', 'This user does not exist!');
-            return isExist = false
-        }
+            return false
+        } else return true
     }
 
-    async function isRequestExist () {
-        
-        const User = Parse.Object.extend("User");
-        const query = new Parse.Query(User);
-        query.equalTo("username", props.friend.name);
+    async function isRequestExistF () {
+        const FriendRequests = Parse.Object.extend("FriendRequests");
+        const query = new Parse.Query(FriendRequests);
+        query.equalTo("toUser", props.friend.name);
         const results = await query.find();
-        console.log(results, ':results');
-        if (results.length === 0) { 
-            Alert.alert ('', 'This user does not exist!');
-            return isExist = false
-        }
+        //console.log(results, ':results');
+        if (results.length !== 0) { 
+            Alert.alert ('', 'The request to this user has been sent earlier!');
+            return true
+        } else return false
     }
 
     async function createFriendRequest () {
         let isExist = true
-        await isUserExist ();
+        let isRequestExist = false
+        isExist = await isUserExistF (isExist);
+        console.log(isExist)
         if (!isExist) return
-        const user = Parse.User.current();
-        const Friends = Parse.Object.extend("Friends");
-            const friend = new Friends();
-            friend.set("user", user);
-            friend.set("toUser", props.friend.name);
-            friend.set("isFriendRequestConfirm", false);
-            await friend.save();
+        // isRequestExist = await isRequestExistF ();
+        // if (isRequestExist) return
 
-            //change friendRequest pole in props.friend.name on true!!!
+        const user = Parse.User.current();
+        const FriendRequests = Parse.Object.extend("FriendRequests");
+        const friendRequest = new FriendRequests();
+        
+        friendRequest.set("author", user);
+        friendRequest.set("toUser", props.friend.name);
+        friendRequest.set("isFriendRequestConfirm", false);
+        await friendRequest.save();
+        
+        //get userId:
+        const User = Parse.Object.extend("User");
+        let query = new Parse.Query(User);
+        query.equalTo("username", props.friend.name);
+        const results = await query.find();
+        const userId = results[0];
+        console.log(userId)
+        //change isFriendsRequest field in FriendList on true!!!
+        let FriendsList = Parse.Object.extend("FriendsList");
+        const query22 = new Parse.Query(FriendsList);
+        query22.equalTo("user_id", userId);
+        const results22 = await query22.find();
+        console.log(results22);
+    
+        results22[0].set('isFriendRequest', 'true')
+        await results22[0].save();
+
             Alert.alert ('', 'Your request has been sent!')
         }
 
@@ -62,11 +83,7 @@ const AddFriendBtn = (props) => {
             <Text>
                 Send request to add friend to friends list
             </Text>
-            <InputTextArea onChangeText = { (data) => {
-                    props.getFriendNameFn(data);
-                    console.log(props.friend)
-                }
-            }/>
+            <InputTextArea onChangeText = { (data) => props.getFriendNameFn(data)}/>
             <SubmitBtn text = 'send' style = {styled.btn} onPress = {add}/>
         </View>
     )

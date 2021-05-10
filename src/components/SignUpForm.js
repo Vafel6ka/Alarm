@@ -22,17 +22,31 @@ const SignUpForm = (props) => {
   user.set("email", props.email.toString());
   // other fields can be set just like with Parse.Object
   //user.set("phone", "415-392-0202");
-  user.add('friends', '_none');
-  user.set('friendRequest', false)
+  // user.add('friends', '_none');
+  // user.set('friendRequest', false)
   
   user.signUp().then(function(user) {
+
+              //create friendsList
+              let FriendsList = Parse.Object.extend("FriendsList");
+              let friendList = new FriendsList();
+              friendList.set("user_id", user);
+              friendList.add("friends", '_none');
+              friendList.set("isFriendRequest", 'false');
+              friendList.save();
+          //------------------
+
       console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
-      Alert.alert('Message', 'You was registrated successfully!')
+      Alert.alert('Message', 'You was registrated successfully!');
+      Parse.User.logOut(); //log out!!!!
       props.navigation.navigate('Home')
   }).catch(function(error){
       console.log("Error: " + error.code + " " + error.message);
       Alert.alert('Error', 'Something wrong! Try again...')
   });
+
+
+
   console.log(props.all);
 }
 

@@ -35,8 +35,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name = 'Home'
-          component = {AddFriendBtn}
-          //component = {StartScreen}
+          component = {StartScreen}
         />
 
         <Stack.Screen
@@ -46,7 +45,8 @@ const App = () => {
         
         <Stack.Screen
           name = 'Main'
-          component = {MapScreen}
+          component = {AddFriendBtn}
+          //component = {MapScreen}
         />
 
         <Stack.Screen
