@@ -4,12 +4,14 @@ import getMeetPointReducer from "./getMeetPointReducer"
 import LogInReducer from "./logInReducer";
 import { USER_LOG_OUT } from "../actions_type"
 import getMeetPointMarkerReducer from "./getMeetPointMarkerReducer";
+import getFriendNameReducer from "./getFriendNameReducer"
 
 const appReducer = combineReducers({
     location: getLocReducer,
     meetPoint: getMeetPointReducer,
     currentUserInfo: LogInReducer,
-    meetPointMarker: getMeetPointMarkerReducer
+    meetPointMarker: getMeetPointMarkerReducer,
+    friend: getFriendNameReducer
 })
 
 const rootReducer = (state, action) => {

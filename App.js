@@ -16,7 +16,8 @@ import { createStackNavigator } from "@react-navigation/stack"
 import LogInForm from './src/components/LogInForm';
 import SignUpForm from './src/components/SignUpForm';
 import MapScreen from './src/components/MapScreen';
-import StartScreen from './src/components/StartScreen'
+import StartScreen from './src/components/StartScreen';
+import AddFriendBtn from './src/components/AddFriendBtn'
 
 //const Parse = require('parse/react-native.js');
 
@@ -34,7 +35,8 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name = 'Home'
-          component = {StartScreen}
+          component = {AddFriendBtn}
+          //component = {StartScreen}
         />
 
         <Stack.Screen

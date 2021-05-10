@@ -7,6 +7,8 @@ export const GET_PASS = 'GET_PASS';
 export const USER_LOG_OUT = 'USER_LOG_OUT';
 export const GET_MEET_POINT_MARKER_DATA = 'GET_MEET_POINT_MARKER_DATA';
 
+export const GET_FRIEND_NAME = 'GET_FRIEND_NAME';
+
 export const GET_DATA_LOADING = 'GET_DATA_LOADING';
 export const GET_DATA_SUCCESS = 'GET_DATA_SUCCESS';
 export const GET_DATA_ERROR = 'GET_DATA_ERROR';

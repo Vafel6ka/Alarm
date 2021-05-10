@@ -13,8 +13,8 @@ export default submitBtn
 
 const styled = StyleSheet.create({
     submitBtn: {
-        width:90,
-        height:30,
+        width: 90,
+        height: 30,
         alignItems: "center",
         justifyContent:"center",
         padding: 5,
@@ -22,9 +22,9 @@ const styled = StyleSheet.create({
         marginBottom: 5,
         shadowOpacity: 0.16,
         shadowColor: "black",
-        shadowRadius:5,
+        shadowRadius: 5,
         backgroundColor:"black",
-        borderRadius:10
+        borderRadius: 10
     },
     textArea: {
         color:"white",

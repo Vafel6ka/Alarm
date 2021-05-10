@@ -8,8 +8,10 @@ import { connect } from "react-redux"
 import getLogin from "../store/actions/getLogin";
 import getPass from "../store/actions/getPass";
 import getEmail from "../store/actions/getEmail";
-import Colors from "../styleConstants/Colors"
+import Colors from "../styleConstants/Colors";
+import { AsyncStorage } from "@react-native-async-storage/async-storage"
 
+Parse.setAsyncStorage(AsyncStorage);
 const SignUpForm = (props) => {
 
   const signUp = () => {
@@ -18,9 +20,10 @@ const SignUpForm = (props) => {
   user.set("username", props.username.toString());
   user.set("password", props.password.toString());
   user.set("email", props.email.toString());
-  
   // other fields can be set just like with Parse.Object
   //user.set("phone", "415-392-0202");
+  user.add('friends', '_none');
+  user.set('friendRequest', false)
   
   user.signUp().then(function(user) {
       console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
