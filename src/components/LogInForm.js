@@ -7,6 +7,7 @@ import { connect } from "react-redux"
 import getLogin from "../store/actions/getLogin";
 import getPass from "../store/actions/getPass";
 import getEmail from "../store/actions/getEmail";
+import getId from "../store/actions/getId"
 import Colors from "../styleConstants/Colors";
 import LogBtn from '../styleComponents/LogBtn';
 import getRequestOnFriendship from "../store/actions/getRequestOnFriendship";
@@ -29,7 +30,7 @@ const LogIn = (props) => {
       .then(user => {
         //get isFriendRequest props:
         getIsFriendRequest();
-
+        //console.log(user['id'])
         console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"))
         props.navigation.navigate('Main');
         console.log(props.all)
@@ -75,6 +76,7 @@ const mapStateToProps = (state) => ({
     username: state.currentUserInfo.username,
     password: state.currentUserInfo.password,
     email: state.currentUserInfo.email,
+    id: state.currentUserInfo.id,
     isRequest: state.friendshipRequest.isRequest
 })
 
@@ -83,6 +85,7 @@ const mapDispatchToProps = (dispatch) => {
     getLoginFn: (data) => dispatch(getLogin(data)),
     getPassFn: (data) => dispatch(getPass(data)),
     getEmailFn: (data) => dispatch(getEmail(data)),
+    getIdFn: (data) => dispatch(getId(data)),
     getRequestOnFriendshipFn: (data) => dispatch(getRequestOnFriendship(data)),
   }
 }

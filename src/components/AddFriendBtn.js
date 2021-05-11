@@ -22,12 +22,22 @@ const AddFriendBtn = (props) => {
     }
 
     async function isRequestExistF () {
+        let isRequestWas = false;
+        const curUserId = Parse.User.current()['id'];
         const FriendRequests = Parse.Object.extend("FriendRequests");
         const query = new Parse.Query(FriendRequests);
         query.equalTo("toUser", props.friend.name);
         const results = await query.find();
+        results.map(user=>{
+            const getUserReqParsObj = user.get('author')
+            const userIdInReq = getUserReqParsObj['id']
+            console.log(userIdInReq,':NNNNNN');
+            if (curUserId == userIdInReq) isRequestWas = true
+        //get id Cur User:
+            
+        })
         //console.log(results, ':results');
-        if (results.length !== 0) { 
+        if (results.length !== 0 && isRequestWas === true) { 
             Alert.alert ('', 'The request to this user has been sent earlier!');
             return true
         } else return false
