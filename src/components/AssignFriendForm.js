@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "../styleConstants/Colors";
 import { connect } from "react-redux";
+import getId from "../store/actions/getId"
 
 const AssignFriendForm = (props) => {
+    const tempArr = [];
     async function getToUserFriendRequest () {
         //get current user name
+        const array = []
         const user = Parse.User.current();
         const toUserName = user.get('username');
         console.log(toUserName)
@@ -16,33 +19,36 @@ const AssignFriendForm = (props) => {
         query.equalTo("toUser", toUserName);
         const results = await query.find();
         console.log(results, ':RES')
-
         //get friend name to assign
-        results.map( user => {
-            console.log(user.get('username'))
+        results.forEach( user => {
+            console.log(user.attributes.username, 'USERNAME')
+            array.push(user.attributes.username)
         })
-       
+        return props.getIdFn(array)
       }
-
-      getToUserFriendRequest();
-
+      
+      useEffect(()=>getToUserFriendRequest(),[])
     return (
-        <View style = {styled.container}>
-            <Text>
-                something - something
-            </Text>
+        <View style = {styled.container}>  
+            {props.friends.map(friend => 
+            <View>
+                <Text>Friend to request:</Text>
+                <Text>{friend}</Text>
+            </View>
+            )}
         </View>
+        
     )
 }
 
 const mapStateToProps = (state) => ({
     all:state,
-    friend: state.friend
+    friends: state.currentUserInfo.id
 })
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // getFriendNameFn: (data) => dispatch(getFriendName(data)),
+    getIdFn: (data) => dispatch(getId(data)),
   }
 }
 
