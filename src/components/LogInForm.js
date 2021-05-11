@@ -7,15 +7,33 @@ import { connect } from "react-redux"
 import getLogin from "../store/actions/getLogin";
 import getPass from "../store/actions/getPass";
 import getEmail from "../store/actions/getEmail";
-import Colors from "../styleConstants/Colors"
+import Colors from "../styleConstants/Colors";
+import LogBtn from '../styleComponents/LogBtn';
+import getRequestOnFriendship from "../store/actions/getRequestOnFriendship";
 
 const LogIn = (props) => {
-  
+
+  async function getIsFriendRequest () {
+    const user = Parse.User.current();
+    const FriendsList = Parse.Object.extend("FriendsList");
+    const query = new Parse.Query(FriendsList);
+    query.equalTo("user_id", user);
+    const friendsListCurrUserParseObj = await query.find();
+    let result = friendsListCurrUserParseObj[0].get('isFriendRequest')
+    console.log(result, ':isFriendRequest');
+    props.getRequestOnFriendshipFn(result)
+  }
+
   const logIn = () => {
     let user = Parse.User.logIn(props.username.toString(), props.password.toString())
       .then(user => {
+        //get isFriendRequest props:
+        getIsFriendRequest();
+
         console.log('We get '+ user.get("username") + ' and his email: ' + user.get("email"))
-        props.navigation.navigate('Main')
+        props.navigation.navigate('Main');
+        console.log(props.all)
+
     })
       .catch (error => {
         console.log(error, "Error!!!");
@@ -26,19 +44,28 @@ const LogIn = (props) => {
 
   return (
     <View style={styled.wrapper}>
-      <Text style={styled.title}> LogIn </Text>
-      <InputTextArea  placeholder = "username" 
-                      onChangeText = {data => props.getLoginFn(data)}/>
+      <View style = {styled.btnBlock}>
+        <View style = {styled.signUpBtn}>
+          <LogBtn onPress = {() => props.navigation.navigate('Sign Up')}>
+                    SignUp
+          </LogBtn>  
+        </View>    
+      </View>
+      <View style = {styled.titleBlock}>
+        <Text style={styled.title}> Login</Text>
+        <InputTextArea  placeholder = "username" 
+                        onChangeText = {data => props.getLoginFn(data)}/>
 
-      <InputTextArea  secureTextEntry={true}
-                      placeholder = "password"
-                      onChangeText = {data => props.getPassFn(data)}/>
+        <InputTextArea  secureTextEntry={true}
+                        placeholder = "password"
+                        onChangeText = {data => props.getPassFn(data)}/>
 
-      <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => {}}>
-        <Text style = {styled.chgPassText}>"Don't remember the password"</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style = {styled.chgPassBtn} onPress = {() => {}}>
+          <Text style = {styled.chgPassText}>"Don't remember the password"</Text>
+        </TouchableOpacity>
 
-      <SubmitBtn text = "Submit" onPress = {logIn}/>
+        <SubmitBtn text = "Submit" onPress = {logIn}/>
+      </View>
     </View>
   )
 }
@@ -47,14 +74,16 @@ const mapStateToProps = (state) => ({
     all:state,
     username: state.currentUserInfo.username,
     password: state.currentUserInfo.password,
-    email: state.currentUserInfo.email
+    email: state.currentUserInfo.email,
+    isRequest: state.friendshipRequest.isRequest
 })
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getLoginFn: (data) => dispatch(getLogin(data)),
     getPassFn: (data) => dispatch(getPass(data)),
-    getEmailFn: (data) => dispatch(getEmail(data))
+    getEmailFn: (data) => dispatch(getEmail(data)),
+    getRequestOnFriendshipFn: (data) => dispatch(getRequestOnFriendship(data)),
   }
 }
 
@@ -80,5 +109,21 @@ const styled = StyleSheet.create({
     },
     chgPassText: {
       fontSize:10
-    }
+    },
+    btnBlock: {
+      alignItems:"flex-end",
+      flex: 0.07,
+      width: "100%"
+  },
+    signUpBtn: {
+      borderWidth: 1,
+      borderRadius: 20,
+      margin: 5
+    },
+  titleBlock: {
+    flex:0.93,
+    alignItems: "center",
+    justifyContent:"center",
+    marginBottom: "25%"
+},
   })

@@ -17,7 +17,8 @@ import LogInForm from './src/components/LogInForm';
 import SignUpForm from './src/components/SignUpForm';
 import MapScreen from './src/components/MapScreen';
 import StartScreen from './src/components/StartScreen';
-import AddFriendBtn from './src/components/AddFriendBtn'
+import AddFriendBtn from './src/components/AddFriendBtn';
+import AssignFriendForm from "./src/components/AssignFriendForm"
 
 //const Parse = require('parse/react-native.js');
 
@@ -33,25 +34,35 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name = 'Home'
           component = {StartScreen}
-        />
+        /> */}
 
         <Stack.Screen
-          name = 'Log In'
+          name = 'Logination form'
           component = {LogInForm}
         />
         
         <Stack.Screen
           name = 'Main'
-          component = {AddFriendBtn}
-          //component = {MapScreen}
+          // component = {AddFriendBtn}
+          component = {MapScreen}
         />
 
         <Stack.Screen
           name = 'Sign Up'
           component = {SignUpForm}
+        />
+
+        <Stack.Screen
+          name = 'Assign friend form'
+          component = {AssignFriendForm}
+        />
+
+        <Stack.Screen
+          name = 'Add friend'
+          component = {AddFriendBtn}
         />
 
         {/* <Stack.Screen

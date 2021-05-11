@@ -1,7 +1,7 @@
 import React from "react";
 import  { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import Colors from "../styleConstants/Colors";
-import LogBtn from "../styleComponents/LogBtn"
+import LogBtn from "../styleComponents/LogBtn";
 
 const StartScreen = (props) => {
   

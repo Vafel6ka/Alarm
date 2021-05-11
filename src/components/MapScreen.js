@@ -7,7 +7,10 @@ import { getCurLocData } from "../store/actions/getCurLocData";
 import { getMeetPointData } from "../store/actions/getMeetPointData";
 import { getMeetPointMarkerData } from "../store/actions/getMeetPointMarkerData";
 import LogBtn from "../styleComponents/LogBtn";
-import logOutUser from "../store/actions/logOutUser"
+import logOutUser from "../store/actions/logOutUser";
+import Colors from "../styleConstants/Colors";
+import AddFriendBtn from "./AssignFriendForm"
+
 
 const Parse = require('parse/react-native.js');
 
@@ -91,28 +94,36 @@ const MapScreen = (props) => {
           console.log(currentUser)
         });
         props.logOutUserFn();
-        console.log(props.all)
-        props.navigation.navigate('Home')
+        console.log(props.all);
+        props.navigation.navigate('Logination form');
       }
 
     return (
         <View style = {styled.container}>
             <View style = {styled.btn}>
-                <LogBtn onPress = {getUserLogOut}>
-                    Log out
-                </LogBtn>   
-                <TouchableOpacity onPress = {geoFindMe} >
-                    <Text>
-                        Push
-                    </Text>
-                </TouchableOpacity>
+                <View style = {styled.logOutBtn}>
+                    <LogBtn onPress = {getUserLogOut}>
+                        Log out
+                    </LogBtn>   
+                </View>
 
-                <Text>
-                    Latilude:  {JSON.stringify(props.latitude)}
-                </Text>
-                <Text>
-                    Longitude: {JSON.stringify(props.longitude)}
-                </Text>
+                <View style = {styled.addFriendBtn}>
+                     <LogBtn onPress = {()=>{
+                         if ((props.isRequest == 'true')) props.navigation.navigate('Assign friend form')
+                            else props.navigation.navigate('Add friend');
+                     }}>
+                         Add
+                         <Text style = {styled.isRequestText}>
+                            {(props.isRequest == 'false') ? '' : ' !'} 
+                        </Text>
+                    </LogBtn>   
+                </View>
+
+                <View style = {styled.toUserLocationBtn}>
+                    <LogBtn onPress = {geoFindMe}>
+                    Push
+                    </LogBtn>   
+                </View>
             </View>
 
             <MapView style={styled.mapScreen}
@@ -138,6 +149,17 @@ const MapScreen = (props) => {
                 /> 
                 
             </MapView>
+            <View style = {styled.bottomField}>
+                <Text style = {styled.bottomFieldTitle}>
+                    Your current location:
+                </Text>
+                <Text>
+                    Latilude:  {JSON.stringify(props.latitude)}
+                </Text>
+                <Text>
+                    Longitude: {JSON.stringify(props.longitude)}
+                </Text>
+            </View>
             
         </View>
     )
@@ -147,7 +169,8 @@ const mapStateToProps = (state) => ({
     all: state,
     longitude: state.location.initialRegion.longitude,
     latitude: state.location.initialRegion.latitude,
-    meetPointCoord: state.meetPoint.meetPointData
+    meetPointCoord: state.meetPoint.meetPointData,
+    isRequest: state.friendshipRequest.isRequest
   });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -168,15 +191,55 @@ const styled = StyleSheet.create ({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: Colors.mainBGcolor
     },
     mapScreen: {
-        flex: 0.8, 
+        flex: 0.7, 
         width: deviceWidth,
         zIndex: 2
     },
     btn: {
-        flex: 0.2,
+        flex: 0.15,
+        alignItems: "flex-end",
+        justifyContent: "center",
+        width: "100%",
+        borderBottomWidth: 2
+    },
+    bottomField: {
+        flex: 0.15,
         alignItems: "center",
-        justifyContent: "center"
-    }
+        justifyContent: "center",
+        width: "100%",
+        borderTopWidth: 2,
+    },
+    bottomFieldTitle: {
+        fontSize: 16,
+        fontWeight: "800"
+    },
+    logOutBtn: {
+        borderWidth: 1,
+        borderRadius: 20,
+        margin: 5,
+    },
+    toUserLocationBtn: {
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
+        borderRadius: 20,
+        margin: 5,
+    },
+    isRequestText: {
+        color: "red",
+        alignItems: "center",
+        fontWeight: "800",
+        // fontSize: 14
+    },
+    addFriendBtn: {
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1,
+        borderRadius: 20,
+        margin: 5,
+    },
+
 })

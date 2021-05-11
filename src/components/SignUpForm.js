@@ -39,7 +39,7 @@ const SignUpForm = (props) => {
       console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
       Alert.alert('Message', 'You was registrated successfully!');
       Parse.User.logOut(); //log out!!!!
-      props.navigation.navigate('Home')
+      props.navigation.navigate('Logination form')
   }).catch(function(error){
       console.log("Error: " + error.code + " " + error.message);
       Alert.alert('Error', 'Something wrong! Try again...')

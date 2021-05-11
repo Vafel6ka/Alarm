@@ -39,8 +39,8 @@ const AddFriendBtn = (props) => {
         isExist = await isUserExistF (isExist);
         console.log(isExist)
         if (!isExist) return
-        // isRequestExist = await isRequestExistF ();
-        // if (isRequestExist) return
+        isRequestExist = await isRequestExistF ();
+        if (isRequestExist) return
 
         const user = Parse.User.current();
         const FriendRequests = Parse.Object.extend("FriendRequests");
@@ -56,19 +56,19 @@ const AddFriendBtn = (props) => {
         let query = new Parse.Query(User);
         query.equalTo("username", props.friend.name);
         const results = await query.find();
-        const userId = results[0];
-        console.log(userId)
+        const toUserParseObj = results[0];
+        console.log(toUserParseObj)
         //change isFriendsRequest field in FriendList on true!!!
         let FriendsList = Parse.Object.extend("FriendsList");
         const query22 = new Parse.Query(FriendsList);
-        query22.equalTo("user_id", userId);
-        const results22 = await query22.find();
-        console.log(results22);
+        query22.equalTo("user_id", toUserParseObj);
+        const toUserFriendList = await query22.find();
+        console.log(toUserFriendList);
     
-        results22[0].set('isFriendRequest', 'true')
-        await results22[0].save();
+        toUserFriendList[0].set('isFriendRequest', 'true')
+        await toUserFriendList[0].save();
 
-            Alert.alert ('', 'Your request has been sent!')
+        Alert.alert ('', 'Your request has been sent!')
         }
 
     async function add () {
@@ -84,7 +84,10 @@ const AddFriendBtn = (props) => {
                 Send request to add friend to friends list
             </Text>
             <InputTextArea onChangeText = { (data) => props.getFriendNameFn(data)}/>
-            <SubmitBtn text = 'send' style = {styled.btn} onPress = {add}/>
+            <View style = {styled.btnBlock}>
+                <SubmitBtn text = 'send' style = {styled.btn} onPress = {add}/>
+                <SubmitBtn text = 'return' style = {styled.btn} onPress = {() => props.navigation.navigate('Logination form')}/>
+            </View>
         </View>
     )
 }
@@ -109,7 +112,11 @@ const styled = StyleSheet.create({
       justifyContent:"center",
       backgroundColor: Colors.mainBGcolor
     },
+    btnBlock: {
+        flexDirection: "row"
+    },
     btn : {
-        width: 240
+        width: 240,
+        margin: 5
     }
   })
