@@ -59,6 +59,7 @@ const AddFriendBtn = (props) => {
         friendRequest.set("author", user);
         friendRequest.set("toUser", props.friend.name);
         friendRequest.set("isFriendRequestConfirm", false);
+        friendRequest.set("username", user.get('username'));
         await friendRequest.save();
         
         //get userId:
@@ -96,7 +97,7 @@ const AddFriendBtn = (props) => {
             <InputTextArea onChangeText = { (data) => props.getFriendNameFn(data)}/>
             <View style = {styled.btnBlock}>
                 <SubmitBtn text = 'send' style = {styled.btn} onPress = {add}/>
-                <SubmitBtn text = 'return' style = {styled.btn} onPress = {() => props.navigation.navigate('Logination form')}/>
+                <SubmitBtn text = 'return' style = {styled.btn} onPress = {() => props.navigation.navigate('Main')}/>
             </View>
         </View>
     )

@@ -18,12 +18,10 @@ const AssignFriendForm = (props) => {
         console.log(results, ':RES')
 
         //get friend name to assign
-        results.map((friend, ind) => {
-            let friendNameToAssign = friend.get('author');
-            console.log(friendNameToAssign.get('username'))
+        results.map( user => {
+            console.log(user.get('username'))
         })
-        
-        
+       
       }
 
       getToUserFriendRequest();
