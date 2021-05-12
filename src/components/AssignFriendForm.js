@@ -29,13 +29,15 @@ const AssignFriendForm = (props) => {
       
       useEffect(()=>getToUserFriendRequest(),[])
     return (
-        <View style = {styled.container}>  
-            {props.friends.map(friend => 
-            <View>
+        <View style = {styled.container}>
+            <Text style = {styled.title}>Friend requests: </Text>
+            {(props.friends.length !==0) ? 
+            props.friends.map(friend => 
+            <View style = {styled.content}>
                 <Text>Friend to request:</Text>
                 <Text>{friend}</Text>
             </View>
-            )}
+            ) : <Text>Loading...</Text> }
         </View>
         
     )
@@ -61,4 +63,13 @@ const styled = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: Colors.mainBGcolor
     },
+    title: {
+        fontSize: 22,
+        fontWeight: "600",
+        margin: 5
+    },
+    content: {
+        alignItems: "center",
+        margin: 5,
+    }
 })
