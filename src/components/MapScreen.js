@@ -3,9 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-nati
 import MapView, { Marker } from "react-native-maps";
 import { connect } from "react-redux";
 import geolocation from "@react-native-community/geolocation";
-import { getCurLocData } from "../store/actions/getCurLocData";
-import { getMeetPointData } from "../store/actions/getMeetPointData";
-import { getMeetPointMarkerData } from "../store/actions/getMeetPointMarkerData";
+import allActions from "../store/actions/allActions"
 import LogBtn from "../styleComponents/LogBtn";
 import logOutUser from "../store/actions/logOutUser";
 import Colors from "../styleConstants/Colors";
@@ -174,10 +172,10 @@ const mapStateToProps = (state) => ({
   });
 
 const mapDispatchToProps = (dispatch) => ({
-    getCurLocDataFn: (data) => dispatch(getCurLocData(data)),
-    getMeetPointDataFn: (data) => dispatch(getMeetPointData(data)),
-    getMeetPointMarkerDataFn: (data) => dispatch(getMeetPointMarkerData(data)),
-    logOutUserFn: () => dispatch(logOutUser())
+    getCurLocDataFn: (data) => dispatch(allActions.getCurLocData(data)),
+    getMeetPointDataFn: (data) => dispatch(allActions.getMeetPointData(data)),
+    getMeetPointMarkerDataFn: (data) => dispatch(allActions.getMeetPointMarkerData(data)),
+    logOutUserFn: () => dispatch(allActions.logOutUser())
     })
 
 export default connect(mapStateToProps, mapDispatchToProps) (MapScreen)

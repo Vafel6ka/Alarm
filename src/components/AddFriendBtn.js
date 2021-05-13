@@ -4,7 +4,7 @@ import InputTextArea from "../styleComponents/InputTextArea";
 import SubmitBtn from "../styleComponents/SubmitBtn";
 import Colors from "../styleConstants/Colors";
 import { connect } from "react-redux";
-import getFriendName from "../store/actions/getFriendName"
+import allActions from "../store/actions/allActions"
 
 
 const AddFriendBtn = (props) => {
@@ -110,7 +110,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getFriendNameFn: (data) => dispatch(getFriendName(data)),
+    getFriendNameFn: (data) => dispatch(allActions.getFriendName(data)),
   }
 }
 

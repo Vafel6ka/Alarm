@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "../styleConstants/Colors";
 import { connect } from "react-redux";
-import getId from "../store/actions/getId";
-import rejectFriendshipRequest from "../store/actions/rejectFriendshipRequest";
-import getRequestOnFriendship from "../store/actions/getRequestOnFriendship"
+import allActions from "../store/actions/allActions"
 import SubmitBtn from "../styleComponents/SubmitBtn";
 
 
@@ -109,8 +107,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     getIdFn: (data) => dispatch(getId(data)),
-    rejectFriendshipRequestFn: (data) => dispatch(rejectFriendshipRequest(data)),
-    getRequestOnFriendshipFn: (data) => dispatch(getRequestOnFriendship(data)),
+    rejectFriendshipRequestFn: (data) => dispatch(allActions.rejectFriendshipRequest(data)),
+    getRequestOnFriendshipFn: (data) => dispatch(allActions.getRequestOnFriendship(data)),
   }
 }
 

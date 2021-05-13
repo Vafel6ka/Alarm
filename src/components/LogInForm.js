@@ -4,10 +4,7 @@ import Parse from 'parse/react-native.js';
 import InputTextArea from "../styleComponents/InputTextArea";
 import SubmitBtn from "../styleComponents/SubmitBtn";
 import { connect } from "react-redux"
-import getLogin from "../store/actions/getLogin";
-import getPass from "../store/actions/getPass";
-import getEmail from "../store/actions/getEmail";
-import getId from "../store/actions/getId"
+import allActions from '../store/actions/allActions'
 import Colors from "../styleConstants/Colors";
 import LogBtn from '../styleComponents/LogBtn';
 import getRequestOnFriendship from "../store/actions/getRequestOnFriendship";
@@ -82,11 +79,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getLoginFn: (data) => dispatch(getLogin(data)),
-    getPassFn: (data) => dispatch(getPass(data)),
-    getEmailFn: (data) => dispatch(getEmail(data)),
-    getIdFn: (data) => dispatch(getId(data)),
-    getRequestOnFriendshipFn: (data) => dispatch(getRequestOnFriendship(data)),
+    getLoginFn: (data) => dispatch(allActions.getLogin(data)),
+    getPassFn: (data) => dispatch(allActions.getPass(data)),
+    getEmailFn: (data) => dispatch(allActions.getEmail(data)),
+    getIdFn: (data) => dispatch(allActions.getId(data)),
+    getRequestOnFriendshipFn: (data) => dispatch(allActions.getRequestOnFriendship(data)),
   }
 }
 
